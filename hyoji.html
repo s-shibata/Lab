@@ -92,11 +92,11 @@ function onEarthTextureLoaded(texture) {
     //material.dispose();
     //geometry.dispose();
     //texture.dispose();
-    material.update();
-    geometry.update();
-    texture.update();
-    earth.update();
-    delete earth;
+    //material.update();
+    //geometry.update();
+    //texture.update();
+    //earth.update();
+    //delete earth;
     //renderTarget.dispose();
     console.log('removed');
 }
@@ -112,7 +112,15 @@ function animate(timestamp) {
     //earth.rotation.x += delta * 0.000015;　　　　　　　　　//ぐるぐるまわしたり
     //earth.rotation.y += delta * 0.000025;
     // VRコントローラのupdate
+    rebderer.update();
     controls.update();　　　　　　　　　　　　　　　　　//updateしないと最初のスマホの向きでカメラが
+    texture.update();
+    scene.update();
+    camera.update();
+    effect.update();
+    manager.update();
+    earth.update();
+    
     // VRマネージャを通してシーンをレンダリング
     manager.render(scene, camera, timestamp);
     // アニメーションループ
