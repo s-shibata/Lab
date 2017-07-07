@@ -89,9 +89,13 @@ function onEarthTextureLoaded(texture) {
     earth.rotation.set(0,0,-Math.PI/2); //VRとthetaの向き合わせ
     scene.add(earth);　　　　　　　　　　//sceneに球体をおく
     console.log('reloaded');    //consoleはprintfみたいなやつ
-    material.dispose();
-    geometry.dispose();
-    texture.dispose();
+    //material.dispose();
+    //geometry.dispose();
+    //texture.dispose();
+    material.update();
+    geometry.update();
+    texture.update();
+    earth.update();
     delete earth;
     //renderTarget.dispose();
     console.log('removed');
