@@ -2,11 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 [RequireComponent(typeof(AudioSource))]
-public class mic: MonoBehaviour
+public class Hz: MonoBehaviour
 {
 	public float RmsValue;
 	public float DbValue;
 	public float PitchValue;
+	public float hz;
+	public float volume;
 
 	private const int QSamples = 1024;
 	private const float RefValue = 0.1f;
@@ -28,17 +30,22 @@ public class mic: MonoBehaviour
 		while(Microphone.GetPosition(null)<=0){}
 		Debug.Log ("aaaa");
 		audio.Play();
-		Debug.Log ("bbb");
+		//Debug.Log ("bbb");
 
 	}
 
 	void Update()
 	{
-		AnalyzeSound();
+		hz = AnalyzeSound();
+		audio.GetOutputData(waveData_, 1);
+		//Debug.Log (waveData_[1023]);
+		volume = waveData_.Select(y => y*y).Sum() / waveData_.Length;
+		//Debug.Log (hz);
 	}
 
-	void AnalyzeSound()
+	float AnalyzeSound()
 	{
+		//Debug.Log ("bbb");
 		GetComponent<AudioSource>().GetOutputData(_samples, 0); // fill array with samples
 		int i;
 		float sum = 0;
@@ -69,6 +76,7 @@ public class mic: MonoBehaviour
 			freqN += 0.5f * (dR * dR - dL * dL);
 		}
 		PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
-		Debug.Log(PitchValue);
+		//Debug.Log(PitchValue);
+		return PitchValue;
 	}
 }
